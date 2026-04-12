@@ -1,13 +1,15 @@
 let leads = [];
 
 // Display leads
-function displayLeads() {
+async function displayLeads() {
+    const res = await fetch("http://localhost:5000/leads");
+    const data = await res.json();
+
     const container = document.getElementById("leads");
     container.innerHTML = "";
 
-    leads.forEach((lead, index) => {
+    data.forEach((lead, index) => {
         const div = document.createElement("div");
-        div.classList.add("lead");
 
         div.innerHTML = `
         <p><strong>${lead.name}</strong></p>
@@ -21,23 +23,31 @@ function displayLeads() {
 }
 
 // Add lead
-document.getElementById("leadForm").addEventListener("submit", function(e) {
+document.getElementById("leadForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
 
-    leads.push({
-        name,
-        email,
-        status: "new"
+    await fetch("http://localhost:5000/leads", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, email })
     });
 
     displayLeads();
 });
 
 // Update status
-function updateStatus(index) {
-    leads[index].status = "contacted";
+async function updateStatus(index) {
+    await fetch(`http://localhost:5000/leads/${index}`, {
+        method: "PUT"
+    });
+
     displayLeads();
 }
+
+//display when page is opened
+displayLeads();
