@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mini CRM</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+        <h1>Client Lead Manangement</h1>
+
+        <!--The form-->
+        <h2>Add Lead</h2>
+        <form id="leadForm">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <button type="submit">Add Lead</button>
+        </form>
+
+        <hr>
+
+        <!--Displaying-->
+        <h2>Leads</h2>
+        <div id="leads"></div>
+
+        <script src="script.js"></script>
     
-</body>
+    </body>
 </html>

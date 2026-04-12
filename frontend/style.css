@@ -1,0 +1,29 @@
+body{
+    font-family: Arial;
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+h1{
+    color: #333;
+}
+
+form input{
+    padding: 10px;
+    margin: 5px;
+}
+
+button{
+    padding: 10px;
+    background: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.lead{
+    background: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
