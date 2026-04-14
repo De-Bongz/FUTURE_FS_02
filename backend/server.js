@@ -26,4 +26,18 @@ app.put("/leads/:index", (req, res) => {
   res.json({ message: "Updated" });
 });
 
+//Adding notes
+app.put("/leads/:index/note", (req, res) => {
+  const index = req.params.index;
+  const { note } = req.body;
+
+  if (!leads[index].notes){
+    leads[index].notes = [];
+  }
+
+  leads[index].notes.push(note);
+
+  res.json({ message: "Note added"});
+});
+
 app.listen(5000, () => console.log("Server running on port 5000"));
