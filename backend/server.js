@@ -1,12 +1,20 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
+
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-let leads = []; // temporary storage (like before)
+//connect database
+console.log("ENV CHECK:", process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
+
 
 // GET all leads
 app.get("/leads", (req, res) => {

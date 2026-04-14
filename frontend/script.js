@@ -1,4 +1,4 @@
-let leads = [];
+
 
 // Display leads
 async function displayLeads() {
