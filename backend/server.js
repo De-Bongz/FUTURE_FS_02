@@ -32,21 +32,43 @@ app.post("/leads", async (req, res) => {
 
 // UPDATE status
 app.put("/leads/:index", async (req, res) => {
-  const Updated = await Lead.findByIdAndUpdate(
-    req.params.index,
-    { status: req.body.status },
-    { new: true }
-  );
-  res.json(Updated);
+  try{
+    const Updated = await Lead.findByIdAndUpdate(
+      req.params.index,
+      { status: req.body.status },
+      { new: true }
+    );
+
+    res.json(Updated);
+  }catch(err){
+    res.status(500).json({ error: err.message });
+  }
+  
 });
 
 //Adding notes
-app.put("/leads/:index/note", async (req, res) => {
-  const lead = await Lead.findByIdAndUpdate(req.params.id);
+app.put("/leads/:id/note", async (req, res) => {
+    try {
+        const lead = await Lead.findById(req.params.id);
 
-  lead.notes.push(req.body.note);
-  await lead.save();
-  res.json(lead);
+        if (!lead) {
+            return res.status(404).json({ message: "Lead not found" });
+        }
+
+        if (!lead.notes) {
+            lead.notes = [];
+        }
+
+        lead.notes.push(req.body.note);
+
+        await lead.save();
+
+        res.json(lead);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+app.listen(5000, () => {
+  console.log("Server running on port 5000");
+});

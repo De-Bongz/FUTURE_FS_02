@@ -8,7 +8,10 @@ const leadSchema = new mongoose.Schema({
         type: String,
         default: "new"
     },
-    notes: [String]
+    notes: {
+        type: [String],
+        default: []
+    }
 });
 
 module.exports = mongoose.model("Lead", leadSchema);

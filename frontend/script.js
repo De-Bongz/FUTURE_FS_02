@@ -12,11 +12,12 @@ async function displayLeads() {
         const div = document.createElement("div");
 
         div.innerHTML = `
-            <p><strong>${lead.name}</strong></p>
-            <p>${lead.email}</p>
+            <p><strong>Name:</strong> ${lead.name}</p>
+            <p><strong>Email:</strong> ${lead.email}</p>
+            <p><strong>Source:</strong> ${lead.source}</p>
             
             <label>Status:</label>
-            <select onchange="updateStatus(lead._id, this.value)">
+            <select onchange="updateStatus('${lead._id}', this.value)">
                 <option value="new" ${lead.status === "new" ? "selected" : ""}>new</option>
                 <option value="contacted" ${lead.status === "contacted" ? "selected" : ""}>contacted</option>
                 <option value="converted" ${lead.status === "converted" ? "selected" : ""}>converted</option>
@@ -24,16 +25,22 @@ async function displayLeads() {
         `;
 
         // SHOW NOTES
-        if (lead.notes) {
+        if (lead.notes && lead.notes.length > 0) {
+            const notesDiv = document.createElement("div");
+
             lead.notes.forEach(note => {
-            div.innerHTML += `<p>📝 ${note}</p>`;
-        });
-  }
+                const p = document.createElement("p");
+                p.innerText = "📝 " + note;
+                notesDiv.appendChild(p);
+            });
+
+            div.appendChild(notesDiv);
+        }
 
         // INPUT + BUTTON
         div.innerHTML += `
-            <input type="text" id="note-${index}" placeholder="Add note">
-            <button onclick="addNote(${index})">Add Note</button>
+            <input type="text" id="note-${lead._id}" placeholder="Add note">
+            <button onclick="addNote('${lead._id}')">Add Note</button>
         `;
 
         container.appendChild(div);
@@ -76,6 +83,7 @@ async function addNote(id) {
     const input = document.getElementById(`note-${id}`);
     const note = input.value;
 
+    if (!note) return;
     
     await fetch(`http://localhost:5000/leads/${id}/note`, {
         method: "PUT",
@@ -85,6 +93,7 @@ async function addNote(id) {
         body: JSON.stringify({ note })
     });
 
+    input.value = "";
     displayLeads();
 }
 
