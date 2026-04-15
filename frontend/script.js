@@ -16,7 +16,7 @@ async function displayLeads() {
             <p>${lead.email}</p>
             
             <label>Status:</label>
-            <select onchange="updateStatus(${index}, this.value)">
+            <select onchange="updateStatus(lead._id, this.value)">
                 <option value="new" ${lead.status === "new" ? "selected" : ""}>new</option>
                 <option value="contacted" ${lead.status === "contacted" ? "selected" : ""}>contacted</option>
                 <option value="converted" ${lead.status === "converted" ? "selected" : ""}>converted</option>
@@ -60,8 +60,8 @@ document.getElementById("leadForm").addEventListener("submit", async function(e)
 });
 
 // Update status
-async function updateStatus(index, status) {
-    await fetch(`http://localhost:5000/leads/${index}`, {
+async function updateStatus(id, status) {
+    await fetch(`http://localhost:5000/leads/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -72,12 +72,12 @@ async function updateStatus(index, status) {
     displayLeads();
 }
 
-async function addNote(index) {
-    const input = document.getElementById(`note-${index}`);
+async function addNote(id) {
+    const input = document.getElementById(`note-${id}`);
     const note = input.value;
 
-    input.value = "";
-    await fetch(`http://localhost:5000/leads/${index}/note`, {
+    
+    await fetch(`http://localhost:5000/leads/${id}/note`, {
         method: "PUT",
         headers: {
         "Content-Type": "application/json"

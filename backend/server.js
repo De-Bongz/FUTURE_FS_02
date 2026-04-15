@@ -1,3 +1,4 @@
+const Lead = require("./models/Leads");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -17,35 +18,35 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 // GET all leads
-app.get("/leads", (req, res) => {
+app.get("/leads", async (req, res) => {
+  const leads = await Lead.find();
   res.json(leads);
 });
 
 // ADD lead
-app.post("/leads", (req, res) => {
-  leads.push({ ...req.body, status: "new" });
-  res.json({ message: "Lead added" });
+app.post("/leads", async (req, res) => {
+  const newLead = new Lead(req.body);
+  await newLead.save();
+  res.json(newLead);
 });
 
 // UPDATE status
-app.put("/leads/:index", (req, res) => {
-  const index = req.params.index;
-  leads[index].status = "contacted";
-  res.json({ message: "Updated" });
+app.put("/leads/:index", async (req, res) => {
+  const Updated = await Lead.findByIdAndUpdate(
+    req.params.index,
+    { status: req.body.status },
+    { new: true }
+  );
+  res.json(Updated);
 });
 
 //Adding notes
-app.put("/leads/:index/note", (req, res) => {
-  const index = req.params.index;
-  const { note } = req.body;
+app.put("/leads/:index/note", async (req, res) => {
+  const lead = await Lead.findByIdAndUpdate(req.params.id);
 
-  if (!leads[index].notes){
-    leads[index].notes = [];
-  }
-
-  leads[index].notes.push(note);
-
-  res.json({ message: "Note added"});
+  lead.notes.push(req.body.note);
+  await lead.save();
+  res.json(lead);
 });
 
 app.listen(5000, () => console.log("Server running on port 5000"));
