@@ -1,24 +1,116 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
 body{
-    font-family: Arial;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+
+.login-body{
+    background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+header{
+    padding: 15px 20px;
+    background: #4a6cf7;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minimax(280px, 1fr));
+    gap: 15px;
     padding: 20px;
-    background: #f5f5f5;
 }
 
-h1{
-    color: #333;
+.card{
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: 0.2s;
+}
+.card:hover{
+    transform: translateY(-3px);
 }
 
-form input{
+.status-new{
+    color: orange;
+    font-weight: bold;
+}
+
+.status-contacted{
+    color: dodgerblue;
+    font-weight: bold;
+}
+
+.status-converted{
+    color: green;
+    font-weight: bold;
+}
+
+input{
+    width: 100%;
     padding: 10px;
-    margin: 5px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+.card input{
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.card button{
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #4a6cf7;
+    color: white;
+    cursor: pointer;
+}
+
+.card:hover{
+    background: #3657d6;
 }
 
 button{
-    padding: 10px;
-    background: blue;
-    color: white;
+    padding: 8px;
+    margin-top: 8px;
     border: none;
+    border-radius: 8px;
+    background: #4a6cf7;
+    color: white;
     cursor: pointer;
+}
+
+button:hover{
+    background: #3657d6;
+}
+
+.error{
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .lead{
@@ -26,4 +118,21 @@ button{
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
+}
+.box{
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.box h2{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 15px;
 }

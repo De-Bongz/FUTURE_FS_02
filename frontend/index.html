@@ -7,25 +7,40 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <script>
+            if(!localStorage.getItem("token")){
+                window.location.href = "login.html";
+            }
+        </script>
         
-        <h1>Client Lead Manangement</h1>
-
+        <header>
+            <h2>Client Lead Manangement Dashboard</h2>
+            <button onclick="logout()">Log Out</button>
+        </header>
         <!--The form-->
-        <h2>Add Lead</h2>
-        <form id="leadForm">
-            <input type="text" id="name" placeholder="Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="source" id="source" placeholder="Source" required>
-            <button type="submit">Add Lead</button>
-        </form>
+        <div style="padding: 20px;">
+            <h2>Add Lead</h2>
+            <form id="leadForm">
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="source" id="source" placeholder="Source" required>
+                <button type="submit">Add Lead</button>
+            </form>
+        </div>
 
-        <hr>
+
 
         <!--Displaying-->
         <h2>Leads</h2>
-        <div id="leads"></div>
+        <div id="leads" class="container"></div>
 
         <script src="script.js"></script>
+        <script>
+            function logout(){
+                localStorage.removeItem("token");
+                window.location.href = "login.html";
+            }
+        </script>
     
     </body>
 </html>

@@ -2,7 +2,11 @@
 
 // Display leads
 async function displayLeads() {
-    const res = await fetch("http://localhost:5000/leads");
+    const res = await fetch("http://localhost:5000/leads",{
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        }
+    });
     const data = await res.json();
 
     const container = document.getElementById("leads");
@@ -95,6 +99,25 @@ async function addNote(id) {
 
     input.value = "";
     displayLeads();
+}
+//login function
+async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    localStorage.setItem("token", data.token);
+
+    window.location.href = "index.html";
 }
 
 //display when page is opened

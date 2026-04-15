@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const Admin = require("./models/Admin");
 const Lead = require("./models/Leads");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -10,6 +12,45 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//adding login api:
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+
+    const admin = await Admin.findOne({ username });
+
+    if (!admin) {
+        return res.status(400).json({ message: "Invalid username" });
+    }
+
+    if (password !== admin.password) {
+        return res.status(400).json({ message: "Invalid password" });
+    }
+
+    const token = jwt.sign(
+        { id: admin._id },
+        "secretkey123",
+        { expiresIn: "1h" }
+    );
+
+    res.json({ token });
+});
+
+// Auth Middleware
+function auth(req, res, next) {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({ message: "No token" });
+    }
+
+    try {
+        jwt.verify(token, "secretkey123");
+        next();
+    } catch (err) {
+        res.status(401).json({ message: "Invalid token" });
+    }
+}
+
 //connect database
 console.log("ENV CHECK:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
@@ -18,7 +59,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 // GET all leads
-app.get("/leads", async (req, res) => {
+app.get("/leads", auth, async (req, res) => {
   const leads = await Lead.find();
   res.json(leads);
 });
@@ -43,7 +84,7 @@ app.put("/leads/:index", async (req, res) => {
   }catch(err){
     res.status(500).json({ error: err.message });
   }
-  
+
 });
 
 //Adding notes
