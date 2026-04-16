@@ -8,9 +8,13 @@
     </head>
     <body>
         <script>
-            if(!localStorage.getItem("token")){
-                window.location.href = "login.html";
-            }
+            (function(){
+                const token = localStorage.getItem("token");
+
+                if(!token){
+                    window.location.replace("login.html");
+                }
+            })();
         </script>
         
         <header>
