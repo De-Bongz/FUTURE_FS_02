@@ -1,6 +1,7 @@
 # CRM Leads Management System
 
 ## 📌 Project Overview
+This is a full-stack CRM system that allows an admin to manage leads, update statuses, add notes, and delete records using a secure login system.
 This is a full-stack CRM (Customer Relationship Management) web application built using:
 - Node.js
 - Express.js
@@ -153,4 +154,5 @@ password: 1234
 ## 👨‍💻 Author
 Author: Bongani Maluleke  
 Student at University of the Western Cape (UWC)
+
 Built as a learning full-stack CRM project for Future Interns.
