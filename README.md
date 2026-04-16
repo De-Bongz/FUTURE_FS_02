@@ -2,7 +2,7 @@
 
 ## 📌 Project Overview
 This is a full-stack CRM system that allows an admin to manage leads, update statuses, add notes, and delete records using a secure login system.
-This is a full-stack CRM (Customer Relationship Management) web application built using:
+The CRM (Customer Relationship Management) web application is built using:
 - Node.js
 - Express.js
 - MongoDB
