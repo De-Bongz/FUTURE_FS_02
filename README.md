@@ -1,58 +1,48 @@
-# CRM Leads Management System
+
+# 📊 CRM Leads Management System
 
 ## 📌 Project Overview
-This is a full-stack CRM system that allows an admin to manage leads, update statuses, add notes, and delete records using a secure login system.
-The CRM (Customer Relationship Management) web application is built using:
-- Node.js
-- Express.js
-- MongoDB
-- JWT Authentication
-- HTML, CSS, JavaScript (Frontend)
 
-It allows an admin to:
-- Login securely
-- Add leads
-- Update lead status
-- Add notes to leads
-- Delete leads
-- View all leads in a dashboard
+This is a full-stack Customer Relationship Management (CRM) system that enables administrators to efficiently manage leads through a secure and interactive dashboard.
+
+The application supports authentication, lead tracking, status updates, and note management, providing a practical solution for handling customer data.
 
 ---
 
 ## 🚀 Features
 
 ### 🔐 Authentication
-- Admin login system using JWT
-- Protected routes (only logged-in users can access data)
+- Secure admin login using JSON Web Tokens (JWT)
+- Protected routes to restrict unauthorized access
 
 ### 📊 Lead Management
 - Add new leads
-- View all leads
+- View all leads in a dashboard
 - Update lead status (New, Contacted, Converted)
-- Add notes to each lead
+- Add notes to leads
 - Delete leads
 
 ### 🧠 Dashboard
-- Clean UI dashboard
+- Clean and responsive UI
 - Real-time updates after actions
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Frontend:**
+### Frontend
 - HTML
 - CSS
 - JavaScript
 
-**Backend:**
+### Backend
 - Node.js
 - Express.js
 
-**Database:**
+### Database
 - MongoDB (Mongoose)
 
-**Authentication:**
+### Authentication
 - JSON Web Token (JWT)
 
 ---
@@ -128,31 +118,43 @@ password: 1234
 
 ---
 
-## 🔥 API Endpoints
+## 🔌 API Endpoints
 
 ### Auth
-- POST /login
+- `POST /login`
 
-### Leads
-- GET /leads (auth required)
-- POST /leads (auth required)
-- PUT /leads/:id (auth required)
-- PUT /leads/:id/note (auth required)
-- DELETE /leads/:id (auth required)
+### Leads (Protected Routes)
+- `GET /leads`
+- `POST /leads`
+- `PUT /leads/:id`
+- `PUT /leads/:id/note`
+- `DELETE /leads/:id`
 
 ---
 
 ## 🧪 Future Improvements
-- Password hashing (bcrypt)
-- Search & filter leads
-- Dashboard analytics
-- Role-based access (admin/user)
-- Deployment to cloud
+
+- Implement password hashing (bcrypt)
+- Add search and filtering functionality
+- Dashboard analytics (charts & insights)
+- Role-based access control (Admin/User)
+- Deploy to cloud (Render / Railway)
 
 ---
 
 ## 👨‍💻 Author
-Author: Bongani Maluleke  
-Student at University of the Western Cape (UWC)
 
-Built as a learning full-stack CRM project for Future Interns.
+**Bongani Maluleke**  
+Computer Science Student – University of the Western Cape (UWC)
+
+---
+
+## 💡 Project Purpose
+
+This project was developed as part of a full-stack learning journey to build real-world applications using modern web technologies.
+
+---
+
+## 📄 License
+
+This project is open-source and available for educational purposes.
