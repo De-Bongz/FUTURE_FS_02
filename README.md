@@ -25,6 +25,11 @@ The application supports authentication, lead tracking, status updates, and note
 - Secure admin login using JSON Web Tokens (JWT)
 - Protected routes to restrict unauthorized access
 
+## 🔐 Security Features
+- Passwords hashed using bcrypt
+- JWT authentication for protected routes
+- Environment variables for sensitive data
+
 ### 📊 Lead Management
 - Add new leads
 - View all leads in a dashboard
