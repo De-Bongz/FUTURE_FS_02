@@ -46,6 +46,11 @@ The application supports authentication, lead tracking, status updates, and note
 - JSON Web Token (JWT)
 
 ---
+## 📸 Screenshots
+![Login Page](screenshots/login.png)
+![Dashboard](screenshots/dashboard.png)
+
+---
 
 ## 📁 Project Structure
 
@@ -85,6 +90,8 @@ npm install
 Create a `.env` file:
 ```
 MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+
 ```
 
 ---
