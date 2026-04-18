@@ -47,8 +47,8 @@ The application supports authentication, lead tracking, status updates, and note
 
 ---
 ## 📸 Screenshots
-![Login Page](screenshots/login.png)
-![Dashboard](screenshots/dashboard.png)
+![Login Page](images/login.png)
+![Dashboard](images/dashboard.png)
 
 ---
 
