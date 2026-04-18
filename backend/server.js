@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const Admin = require("./models/Admin");
@@ -13,6 +14,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+/*app.get("/create-admin", async (req, res) => {
+    try {
+
+        const hashedPassword = await bcrypt.hash("1234", 10);
+
+        const admin = new Admin({
+            username: "admin",
+            password: hashedPassword
+        });
+
+        await admin.save();
+
+        res.send("Admin created successfully");
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+*/
 /* =========================
    DATABASE CONNECTION
 ========================= */
@@ -32,7 +53,9 @@ function auth(req, res, next) {
 
     try {
         const token = header.split(" ")[1];
-        jwt.verify(token, "secretkey123");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        req.user = decoded; // 🔥 useful later
         next();
     } catch (err) {
         return res.status(401).json({ message: "Invalid token" });
@@ -43,33 +66,53 @@ function auth(req, res, next) {
    LOGIN
 ========================= */
 app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
+    try {
+        const { username, password } = req.body;
 
-    const admin = await Admin.findOne({ username });
+        const admin = await Admin.findOne({ username });
 
-    if (!admin) {
-        return res.status(400).json({ message: "Invalid username" });
+        if (!admin) {
+            return res.status(400).json({ message: "Invalid username" });
+        }
+
+        // 🔥 bcrypt compare
+        const isMatch = await bcrypt.compare(password, admin.password);
+
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+
+        const token = jwt.sign(
+            { id: admin._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        res.json({ token });
+
+    } catch (err) {
+        res.status(500).json({ message: "Server error" });
     }
-
-    if (password !== admin.password) {
-        return res.status(400).json({ message: "Invalid password" });
-    }
-
-    const token = jwt.sign(
-        { id: admin._id },
-        "secretkey123",
-        { expiresIn: "1h" }
-    );
-
-    res.json({ token });
 });
 /* =========================
-   GET LEADS
+   GET LEADS (with search/filter)
 ========================= */
 app.get("/leads", auth, async (req, res) => {
-    const leads = await Lead.find();
+  try {
+    const { status, name, email } = req.query;
+    const filter = {};
+
+    if (status) filter.status = status;
+    if (name) filter.name = new RegExp(name, "i");   // case-insensitive
+    if (email) filter.email = new RegExp(email, "i");
+
+    const leads = await Lead.find(filter);
     res.json(leads);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
+
 
 /* =========================
    ADD LEAD
@@ -122,6 +165,7 @@ app.delete("/leads/:id", auth, async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 /* =========================
    SERVER

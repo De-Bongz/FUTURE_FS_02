@@ -30,7 +30,7 @@ header{
 
 .container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minimax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 15px;
     padding: 20px;
 }
@@ -61,21 +61,14 @@ header{
     font-weight: bold;
 }
 
-input{
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-}
 
-.card input{
+input, .card input{
     width: 100%;
     padding: 8px;
     margin-top: 8px;
     border: 1px solid #ddd;
     border-radius: 8px;
+    outline: none;
 }
 
 .card button{
@@ -90,7 +83,8 @@ input{
 }
 
 .card:hover{
-    background: #3657d6;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
 button{

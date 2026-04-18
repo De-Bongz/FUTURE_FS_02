@@ -10,6 +10,14 @@ async function displayLeads() {
         }
     });
 
+    // 🔥 HANDLE UNAUTHORIZED
+    if (res.status === 401) {
+        alert("Session expired. Please login again.");
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+        return;
+    }
+
     const data = await res.json();
 
     const container = document.getElementById("leads");
@@ -22,6 +30,9 @@ async function displayLeads() {
         div.innerHTML = `
             <p><strong>${lead.name}</strong></p>
             <p>${lead.email}</p>
+
+            <p><small>Created: ${new Date(lead.createdAt).toLocaleString()}</small></p>
+            <p><small>Updated: ${new Date(lead.updatedAt).toLocaleString()}</small></p>
 
             <select onchange="updateStatus('${lead._id}', this.value)">
                 <option value="new" ${lead.status === "new" ? "selected" : ""}>New</option>
@@ -71,8 +82,13 @@ document.getElementById("leadForm").addEventListener("submit", async function(e)
         body: JSON.stringify({ name, email, source })
     });
 
+    // ✅ Clear the form inputs
+    document.getElementById("leadForm").reset();
+
+    // Refresh the leads list
     displayLeads();
 });
+
 
 /* =========================
    UPDATE STATUS
@@ -142,7 +158,12 @@ async function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const res = await fetch("http://localhost:5000/login", {
+    if(!username || !password){
+        alert("Please fill in all fields");
+        return;
+    }
+
+    const res = await fetch(`${API}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -161,6 +182,27 @@ async function login() {
 
     window.location.href = "index.html";
 }
+
+/* =========================
+   FILTER LEADS
+========================= */
+async function filterLeads() {
+    const name = document.getElementById("searchName").value;
+    const status = document.getElementById("filterStatus").value;
+
+    const res = await fetch(`${API}/leads?name=${name}&status=${status}`, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+    });
+
+    const data = await res.json();
+    const container = document.getElementById("leads");
+    container.innerHTML = "";
+    data.forEach(lead => {
+        // reuse your card rendering logic here
+    });
+}
+
+
 
 /* =========================
    LOAD

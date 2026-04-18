@@ -25,17 +25,30 @@
         <div style="padding: 20px;">
             <h2>Add Lead</h2>
             <form id="leadForm">
+                <label for="name">Name</label>
                 <input type="text" id="name" placeholder="Name" required>
+
+                <label for="email">Email</label>
                 <input type="email" id="email" placeholder="Email" required>
+
+                <label for="source">Source</label>
                 <input type="source" id="source" placeholder="Source" required>
+
                 <button type="submit">Add Lead</button>
             </form>
         </div>
 
 
-
         <!--Displaying-->
         <h2>Leads</h2>
+        <input type="text" id="searchName" placeholder="Search by name">
+        <select id="filterStatus">
+            <option value="">All</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="converted">Converted</option>
+        </select>
+        <button onclick="filterLeads()">Search</button>
         <div id="leads" class="container"></div>
 
         <script src="script.js"></script>
