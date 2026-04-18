@@ -8,6 +8,16 @@ This is a full-stack Customer Relationship Management (CRM) system that enables 
 The application supports authentication, lead tracking, status updates, and note management, providing a practical solution for handling customer data.
 
 ---
+## 🚀 Live Demo
+👉 https://de-bongz.github.io/FUTURE_FS_02/
+
+---
+
+## 💻 GitHub Repository
+👉 https://github.com/De-Bongz/FUTURE_FS_02
+
+---
+
 
 ## 🚀 Features
 
