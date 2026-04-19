@@ -57,12 +57,12 @@ This project demonstrates real-world full-stack development skills including aut
 
 ### Backend
 
-* entity["software","Node.js"]
-* entity["software","Express.js"]
+* Node.js
+* Express.js
 
 ### Database
 
-* entity["company","MongoDB"] (MongoDB Atlas)
+* MongoDB Atlas
 
 ### Authentication
 
@@ -71,8 +71,8 @@ This project demonstrates real-world full-stack development skills including aut
 
 ### Deployment
 
-* entity["company","GitHub"] Pages (Frontend)
-* entity["company","Render"] (Backend Hosting)
+* GitHub Pages (Frontend)
+* Render (Backend Hosting)
 
 ---
 
@@ -172,26 +172,26 @@ Using Live Server or directly in browser.
 
 ### Login Page
 
-*(Add screenshot here)*
+*(images/login.png)*
 
 ### Dashboard
 
-*(Add screenshot here)*
+*(images/dashboard.png)*
 
 ---
 
 ## 🌐 Deployment
 
-* Frontend deployed via entity["company","GitHub"] Pages
-* Backend hosted on entity["company","Render"]
-* Database hosted on entity["company","MongoDB"] Atlas
+* Frontend deployed via GitHub Pages
+* Backend hosted on Render
+* Database hosted on MongoDB Atlas
 
 ---
 
 ## 🧠 Challenges Faced
 
 * Managing JWT authentication across frontend and backend
-* Connecting entity["company","MongoDB"] Atlas securely
+* Connecting MongoDB Atlas securely
 * Handling CORS between deployed frontend and backend
 * Ensuring consistent API integration after deployment
 
