@@ -172,11 +172,11 @@ Using Live Server or directly in browser.
 
 ### Login Page
 
-*(images/login.png)*
+*[images/login.png]
 
 ### Dashboard
 
-*(images/dashboard.png)*
+*[images/dashboard.png]
 
 ---
 
