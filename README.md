@@ -1,87 +1,66 @@
+
+---
+
 # 📊 CRM Leads Management System
 
-## 📌 Overview
+## 📌 Project Overview
+This is a full-stack Customer Relationship Management (CRM) system that enables users to efficiently manage leads through a secure and interactive dashboard.
 
-The **CRM Leads Management System** is a full-stack web application designed to help administrators efficiently manage customer leads. It provides a secure dashboard for tracking, updating, and organizing leads throughout the sales pipeline.
-
-This project demonstrates real-world full-stack development skills including authentication, CRUD operations, database integration, and deployment.
-
----
-
-## 🚀 Live Demo
-
-👉 Frontend: [https://de-bongz.github.io/FUTURE_FS_02/](https://de-bongz.github.io/FUTURE_FS_02/)
-
-👉 Backend: *()*
+The application supports authentication, lead tracking, status updates, note management, and lead deletion, providing a practical solution for handling customer data.
 
 ---
 
-## 🧠 Key Features
+## 🚀 Features
 
-### 🔐 Authentication & Security
-
-* Secure admin login using JWT (JSON Web Tokens)
-* Password hashing with bcrypt
-* Protected API routes
-* Environment variables for sensitive configuration
+### 🔐 Authentication
+- Secure login using JSON Web Tokens (JWT)
+- Protected routes to restrict unauthorized access
 
 ### 📊 Lead Management
+- Add new leads
+- View all leads in a dashboard
+- Search and filter leads by name or status
+- Update lead status (New, Contacted, Converted)
+- Add notes to leads
+- Delete leads (available to all authenticated users)
 
-* Create new leads
-* View all leads in dashboard
-* Update lead status (New, Contacted, Converted)
-* Add notes to individual leads
-* Delete leads
-
-### 🔍 Bonus Features
-
-* Search and filter leads
-* Timestamp tracking (created/updated)
-* Responsive UI design
-
-### 🎨 User Interface
-
-* Clean blue-themed dashboard
-* Fully responsive (mobile + desktop)
-* Real-time UI updates after actions
+### 🧠 Dashboard
+- Clean and responsive UI
+- Real-time updates after actions
+- Spinner and feedback messages during login
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-
-* HTML5
-* CSS3
-* JavaScript (Vanilla)
+- HTML
+- CSS
+- JavaScript
 
 ### Backend
-
-* Node.js
-* Express.js
+- Node.js
+- Express.js
 
 ### Database
-
-* MongoDB Atlas
+- MongoDB (Mongoose)
 
 ### Authentication
+- JSON Web Token (JWT)
 
-* JWT (JSON Web Token)
-* bcrypt
+---
 
-### Deployment
-
-* GitHub Pages (Frontend)
-* Render (Backend Hosting)
+## 📸 Screenshots
+![Login Page](images/login.png)
+![Dashboard](images/dashboard.png)
 
 ---
 
 ## 📁 Project Structure
-
 ```
 backend/
 │── models/
-│   ├── Admin.js
+│   ├── User.js
 │   ├── Leads.js
 │
 │── server.js
@@ -99,120 +78,76 @@ frontend/
 
 ## ⚙️ Setup Instructions
 
-### 1. Clone Repository
-
-```
+### 1. Clone Project
+```bash
 git clone <your-repo-url>
 ```
 
 ### 2. Install Backend Dependencies
-
-```
+```bash
 cd backend
 npm install
 ```
 
-### 3. Create Environment Variables
-
-Create a `.env` file in the backend folder:
-
-```
+### 3. Setup Environment Variables
+Create a `.env` file:
+```env
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
-PORT=5000
 ```
-
-⚠️ Never commit `.env` to GitHub.
-
----
 
 ### 4. Start Backend Server
-
-```
+```bash
 node server.js
 ```
-
-Backend runs on:
-
+Server runs on:
 ```
 http://localhost:5000
 ```
 
----
-
 ### 5. Run Frontend
-
 Open:
-
 ```
 login.html
 ```
-
-Using Live Server or directly in browser.
+Using Live Server or browser
 
 ---
 
 ## 🔌 API Endpoints
 
-### Authentication
-
-* `POST /login`
+### Auth
+- `POST /login`
+- `POST /signup`
 
 ### Leads (Protected Routes)
-
-* `GET /leads`
-* `POST /leads`
-* `PUT /leads/:id`
-* `PUT /leads/:id/note`
-* `DELETE /leads/:id`
-
----
-
-## 📸 Screenshots
-
-### Login Page
-
-*[images/login.png]
-
-### Dashboard
-
-*[images/dashboard.png]
+- `GET /leads`
+- `POST /leads`
+- `PUT /leads/:id`
+- `PUT /leads/:id/note`
+- `DELETE /leads/:id`
 
 ---
 
-## 🌐 Deployment
-
-* Frontend deployed via GitHub Pages
-* Backend hosted on Render
-* Database hosted on MongoDB Atlas
-
----
-
-## 🧠 Challenges Faced
-
-* Managing JWT authentication across frontend and backend
-* Connecting MongoDB Atlas securely
-* Handling CORS between deployed frontend and backend
-* Ensuring consistent API integration after deployment
-
----
-
-## 🚀 Future Improvements
-
-* Role-based access control (Admin/User)
-* Advanced analytics dashboard (charts & insights)
-* Email notifications for lead updates
-* Pagination for large datasets
+## 🧪 Future Improvements
+- Implement password hashing (bcrypt)
+- Dashboard analytics (charts & insights)
+- Role-based access control (Admin/User)
+- Deploy to cloud (Render / Railway)
 
 ---
 
 ## 👨‍💻 Author
-
-**Bongani Maluleke**
+**Bongani Maluleke**  
 Computer Science Student – University of the Western Cape (UWC)
 
 ---
 
-## 📌 License
+## 💡 Project Purpose
+This project was developed as part of a full-stack learning journey to build real-world applications using modern web technologies.
 
-This project is open-source and intended for educational purposes.
+---
+
+## 📄 License
+This project is open-source and available for educational purposes.
+---
