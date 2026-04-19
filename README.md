@@ -80,7 +80,7 @@ frontend/
 
 ### 1. Clone Project
 ```bash
-git clone <your-repo-url>
+git clone 
 ```
 
 ### 2. Install Backend Dependencies
