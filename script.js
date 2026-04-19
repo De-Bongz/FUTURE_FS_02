@@ -257,3 +257,4 @@ async function filterLeads(){
 if (localStorage.getItem("token")){
   displayLeads();
 }
+
