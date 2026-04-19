@@ -1,75 +1,130 @@
+📊 CRM Leads Management System
 
-# 📊 CRM Leads Management System
+   
 
-## 📌 Project Overview
-
-This is a full-stack Customer Relationship Management (CRM) system that enables administrators to efficiently manage leads through a secure and interactive dashboard.
-
-The application supports authentication, lead tracking, status updates, and note management, providing a practical solution for handling customer data.
-
----
-## 🚀 Live Demo
-👉 https://de-bongz.github.io/FUTURE_FS_02/
 
 ---
 
-## 💻 GitHub Repository
-👉 https://github.com/De-Bongz/FUTURE_FS_02
+📌 Overview
+
+The CRM Leads Management System is a full-stack web application designed to help administrators efficiently manage customer leads. It provides a secure dashboard for tracking, updating, and organizing leads throughout the sales pipeline.
+
+This project demonstrates real-world full-stack development skills including authentication, CRUD operations, database integration, and deployment.
+
 
 ---
 
+🚀 Live Demo
 
-## 🚀 Features
+👉 Frontend: https://de-bongz.github.io/FUTURE_FS_02/
 
-### 🔐 Authentication
-- Secure admin login using JSON Web Tokens (JWT)
-- Protected routes to restrict unauthorized access
+👉 Backend: 
 
-### 🔐 Security Features
-- Passwords hashed using bcrypt
-- JWT authentication for protected routes
-- Environment variables for sensitive data
-
-### 📊 Lead Management
-- Add new leads
-- View all leads in a dashboard
-- Update lead status (New, Contacted, Converted)
-- Add notes to leads
-- Delete leads
-
-### 🧠 Dashboard
-- Clean and responsive UI
-- Real-time updates after actions
 
 ---
 
-## 🛠️ Tech Stack
+📸 Screenshots
 
-### Frontend
-- HTML
-- CSS
-- JavaScript
+🔐 Login Page
 
-### Backend
-- Node.js
-- Express.js
+<p align="center">
+  <img src="images/login.png" width="700" alt="Login Page" />
+</p>📊 Dashboard
 
-### Database
-- MongoDB (Mongoose)
-
-### Authentication
-- JSON Web Token (JWT)
-
----
-## 📸 Screenshots
-![Login Page](images/login.png)
-![Dashboard](images/dashboard.png)
-
+<p align="center">
+  <img src="images/dashboard.png" width="700" alt="Dashboard" />
+</p>
 ---
 
-## 📁 Project Structure
+🧠 Key Features
 
-```
+🔐 Authentication & Security
+
+Secure admin login using JWT (JSON Web Tokens)
+
+Password hashing with bcrypt
+
+Protected API routes
+
+Environment variables for sensitive configuration
+
+
+📊 Lead Management
+
+Create new leads
+
+View all leads in dashboard
+
+Update lead status (New, Contacted, Converted)
+
+Add notes to individual leads
+
+Delete leads
+
+
+🔍 Bonus Features
+
+Search and filter leads
+
+Timestamp tracking (created/updated)
+
+Responsive UI design
+
+
+🎨 User Interface
+
+Clean blue-themed dashboard
+
+Fully responsive (mobile + desktop)
+
+Real-time UI updates after actions
+
+
+
+---
+
+🛠️ Tech Stack
+
+Frontend
+
+HTML5
+
+CSS3
+
+JavaScript (Vanilla)
+
+
+Backend
+
+Node.js
+
+Express.js
+
+
+Database
+
+MongoDB (MongoDB Atlas)
+
+
+Authentication
+
+JWT (JSON Web Token)
+
+bcrypt
+
+
+Deployment
+
+GitHub Pages (Frontend)
+
+Render (Backend Hosting)
+
+
+
+---
+
+📁 Project Structure
+
 backend/
 │── models/
 │   ├── Admin.js
@@ -84,99 +139,119 @@ frontend/
 │── index.html
 │── style.css
 │── script.js
-```
+
 
 ---
 
-## ⚙️ Setup Instructions
+⚙️ Setup Instructions
 
-### 1. Clone Project
-```
+1. Clone Repository
+
 git clone <your-repo-url>
-```
 
-### 2. Install Backend Dependencies
-```
+2. Install Backend Dependencies
+
 cd backend
 npm install
-```
 
-### 3. Setup Environment Variables
-Create a `.env` file:
-```
+3. Create Environment Variables
+
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+PORT=5000
 
-```
 
 ---
 
-### 4. Start Backend Server
-```
+4. Start Backend Server
+
 node server.js
-```
 
-Server runs on:
-```
-http://localhost:5000
-```
 
 ---
 
-### 5. Run Frontend
+5. Run Frontend
+
 Open:
-```
+
 login.html
-```
-Using Live Server or browser
+
+Using Live Server or browser.
+
 
 ---
 
-## 🔑 Default Login (if seeded manually)
-```
-username: admin
-password: 1234
-```
+🔌 API Endpoints
+
+Authentication
+
+POST /login
+
+
+Leads (Protected Routes)
+
+GET /leads
+
+POST /leads
+
+PUT /leads/:id
+
+PUT /leads/:id/note
+
+DELETE /leads/:id
+
+
 
 ---
 
-## 🔌 API Endpoints
+🌐 Deployment
 
-### Auth
-- `POST /login`
+Frontend: GitHub Pages
 
-### Leads (Protected Routes)
-- `GET /leads`
-- `POST /leads`
-- `PUT /leads/:id`
-- `PUT /leads/:id/note`
-- `DELETE /leads/:id`
+Backend: Render
+
+Database: MongoDB Atlas
+
+
 
 ---
 
-## 🧪 Future Improvements
+🧠 Challenges Faced
 
-- Implement password hashing (bcrypt)
-- Add search and filtering functionality
-- Dashboard analytics (charts & insights)
-- Role-based access control (Admin/User)
-- Deploy to cloud (Render / Railway)
+JWT authentication integration across frontend & backend
+
+MongoDB Atlas secure connection setup
+
+CORS configuration between deployed services
+
+Environment variable management in production
+
+
 
 ---
 
-## 👨‍💻 Author
+🚀 Future Improvements
 
-**Bongani Maluleke**  
+Role-based access control (Admin/User)
+
+Analytics dashboard with charts
+
+Email notifications for lead updates
+
+Pagination for large datasets
+
+
+
+---
+
+👨‍💻 Author
+
+Bongani Maluleke
 Computer Science Student – University of the Western Cape (UWC)
 
----
-
-## 💡 Project Purpose
-
-This project was developed as part of a full-stack learning journey to build real-world applications using modern web technologies.
 
 ---
 
-## 📄 License
+📌 License
 
-This project is open-source and available for educational purposes.
+This project is open-source and intended for educational purposes.
