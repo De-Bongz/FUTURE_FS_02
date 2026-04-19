@@ -5,105 +5,101 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const Admin = require("./models/Admin");
 
+const Admin = require("./models/Admin");
+const User = require("./models/User");   // new model
 const Lead = require("./models/Leads");
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
-
-/*app.get("/create-admin", async (req, res) => {
-    try {
-
-        const hashedPassword = await bcrypt.hash("1234", 10);
-
-        const admin = new Admin({
-            username: "admin",
-            password: hashedPassword
-        });
-
-        await admin.save();
-
-        res.send("Admin created successfully");
-
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-*/
 /* =========================
    DATABASE CONNECTION
 ========================= */
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => console.error("❌ DB Error:", err));
 
 /* =========================
    AUTH MIDDLEWARE
 ========================= */
 function auth(req, res, next) {
-    const header = req.headers.authorization;
+  const header = req.headers.authorization;
+  if (!header) return res.status(401).json({ message: "No token provided" });
 
-    if (!header) {
-        return res.status(401).json({ message: "No token" });
-    }
-
-    try {
-        const token = header.split(" ")[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        req.user = decoded; // 🔥 useful later
-        next();
-    } catch (err) {
-        return res.status(401).json({ message: "Invalid token" });
-    }
+  try {
+    const token = header.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch {
+    return res.status(401).json({ message: "Invalid token" });
+  }
 }
 
 /* =========================
-   LOGIN
+   SIGN UP (User)
+========================= */
+app.post("/signup", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+
+    const existing = await User.findOne({ username });
+    if (existing) return res.status(400).json({ message: "Username already exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword });
+    await newUser.save();
+
+    res.json({ success: true, message: "User account created successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error: " + err.message });
+  }
+});
+
+/* =========================
+   LOGIN (Admin or User)
 ========================= */
 app.post("/login", async (req, res) => {
-    try {
-        const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).json({ message: "All fields required" });
 
-        const admin = await Admin.findOne({ username });
+    // Check Admin first
+    let account = await Admin.findOne({ username });
+    let role = "admin";
 
-        if (!admin) {
-            return res.status(400).json({ message: "Invalid username" });
-        }
-
-        // 🔥 bcrypt compare
-        const isMatch = await bcrypt.compare(password, admin.password);
-
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid password" });
-        }
-
-        const token = jwt.sign(
-            { id: admin._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
-
-        res.json({ token });
-
-    } catch (err) {
-        res.status(500).json({ message: "Server error" });
+    if (!account) {
+      // Check User
+      account = await User.findOne({ username });
+      role = "user";
     }
+
+    if (!account) return res.status(400).json({ message: "Invalid username" });
+
+    const isMatch = await bcrypt.compare(password, account.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid password" });
+
+    const token = jwt.sign({ id: account._id, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    res.json({ token, role });
+  } catch (err) {
+    res.status(500).json({ message: "Server error: " + err.message });
+  }
 });
+
 /* =========================
-   GET LEADS (with search/filter)
+   LEADS CRUD
 ========================= */
 app.get("/leads", auth, async (req, res) => {
   try {
     const { status, name, email } = req.query;
     const filter = {};
-
     if (status) filter.status = status;
-    if (name) filter.name = new RegExp(name, "i");   // case-insensitive
+    if (name) filter.name = new RegExp(name, "i");
     if (email) filter.email = new RegExp(email, "i");
 
     const leads = await Lead.find(filter);
@@ -113,63 +109,60 @@ app.get("/leads", auth, async (req, res) => {
   }
 });
 
-
-/* =========================
-   ADD LEAD
-========================= */
 app.post("/leads", auth, async (req, res) => {
+  try {
+    const { name, email, source } = req.body;
+    if (!name || !email || !source) {
+      return res.status(400).json({ message: "Name, email, and source required" });
+    }
     const lead = new Lead(req.body);
     await lead.save();
     res.json(lead);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-/* =========================
-   UPDATE STATUS
-========================= */
 app.put("/leads/:id", auth, async (req, res) => {
-    await Lead.findByIdAndUpdate(req.params.id, {
-        status: req.body.status
-    });
-
-    res.json({ message: "Status updated" });
+  try {
+    const lead = await Lead.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status, updatedAt: Date.now() },
+      { new: true }
+    );
+    if (!lead) return res.status(404).json({ message: "Lead not found" });
+    res.json({ message: "Status updated", lead });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-/* =========================
-   ADD NOTE
-========================= */
 app.put("/leads/:id/note", auth, async (req, res) => {
+  try {
     const lead = await Lead.findById(req.params.id);
-
     if (!lead) return res.status(404).json({ message: "Lead not found" });
 
     lead.notes.push(req.body.note);
+    lead.updatedAt = Date.now();
     await lead.save();
 
-    res.json({ message: "Note added" });
+    res.json({ message: "Note added", lead });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-/* =========================
-   DELETE LEAD
-========================= */
 app.delete("/leads/:id", auth, async (req, res) => {
-    try {
-        const deleted = await Lead.findByIdAndDelete(req.params.id);
-
-        if (!deleted) {
-            return res.status(404).json({ message: "Lead not found" });
-        }
-
-        res.json({ message: "Lead deleted" });
-
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+  try {
+    await Lead.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: "Server error: " + err.message });
+  }
 });
-
 
 /* =========================
    SERVER
 ========================= */
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+
         <script>
             (function(){
                 const token = localStorage.getItem("token");
@@ -16,13 +17,19 @@
                 }
             })();
         </script>
-        
-        <header>
-            <h2>Client Lead Manangement Dashboard</h2>
+    <!-- Header Navigation -->
+    <header>
+        <h2>Client Lead Management Dashboard</h2>
+        <nav class="top-nav">
+            <button onclick="showSection('home', this)">Home</button>
+            <button onclick="showSection('leads', this)">View Leads</button>
             <button onclick="logout()">Log Out</button>
-        </header>
-        <!--The form-->
-        <div style="padding: 20px;">
+        </nav>
+    </header>
+
+    <main class="content">
+        <!-- Home Section -->
+        <section id="home" class="card active">
             <h2>Add Lead</h2>
             <form id="leadForm">
                 <label for="name">Name</label>
@@ -32,32 +39,35 @@
                 <input type="email" id="email" placeholder="Email" required>
 
                 <label for="source">Source</label>
-                <input type="source" id="source" placeholder="Source" required>
+                <input type="text" id="source" placeholder="Source" required>
 
                 <button type="submit">Add Lead</button>
             </form>
-        </div>
+        </section>
 
+        <!-- Leads Section -->
+        <section id="leads" class="card">
+            <h2>Leads</h2>
+            <div class="filter-bar">
+                <input type="text" id="searchName" placeholder="Search by name">
+                <select id="filterStatus">
+                <option value="">All</option>
+                <option value="new">New</option>
+                <option value="contacted">Contacted</option>
+                <option value="converted">Converted</option>
+                </select>
+                <button onclick="filterLeads()">Search</button>
+            </div>
+            <div id="leadsContainer" class="container"></div>
+        </section>
+    </main>
 
-        <!--Displaying-->
-        <h2>Leads</h2>
-        <input type="text" id="searchName" placeholder="Search by name">
-        <select id="filterStatus">
-            <option value="">All</option>
-            <option value="new">New</option>
-            <option value="contacted">Contacted</option>
-            <option value="converted">Converted</option>
-        </select>
-        <button onclick="filterLeads()">Search</button>
-        <div id="leads" class="container"></div>
-
-        <script src="script.js"></script>
-        <script>
-            function logout(){
-                localStorage.removeItem("token");
-                window.location.href = "login.html";
-            }
-        </script>
-    
+    <script src="script.js"></script>
+    <script>
+        function logout(){
+        localStorage.clear();
+        window.location.href = "login.html";
+        }
+    </script>
     </body>
 </html>
