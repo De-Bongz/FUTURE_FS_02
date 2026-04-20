@@ -10,6 +10,11 @@ The application supports authentication, lead tracking, status updates, note man
 
 ---
 
+## 🚀 Live Demo
+👉 https://de-bongz.github.io/FUTURE_FS_02/
+
+---
+
 ## 🚀 Features
 
 ### 🔐 Authentication
