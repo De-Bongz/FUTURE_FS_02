@@ -7,7 +7,6 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
 const Admin = require("./models/Admin");
-const User = require("./models/User");   // new model
 const Lead = require("./models/Leads");
 
 const app = express();
@@ -39,7 +38,7 @@ function auth(req, res, next) {
 }
 
 /* =========================
-   SIGN UP (User)
+   SIGN UP (Admin only)
 ========================= */
 app.post("/signup", async (req, res) => {
   try {
@@ -48,44 +47,35 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json({ message: "All fields required" });
     }
 
-    const existing = await User.findOne({ username });
+    const existing = await Admin.findOne({ username });
     if (existing) return res.status(400).json({ message: "Username already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword });
-    await newUser.save();
+    const newAdmin = new Admin({ username, email, password: hashedPassword });
+    await newAdmin.save();
 
-    res.json({ success: true, message: "User account created successfully" });
+    res.json({ success: true, message: "Admin account created successfully" });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }
 });
 
 /* =========================
-   LOGIN (Admin or User)
+   LOGIN (Admin only)
 ========================= */
 app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).json({ message: "All fields required" });
 
-    // Check Admin first
-    let account = await Admin.findOne({ username });
-    let role = "admin";
-
-    if (!account) {
-      // Check User
-      account = await User.findOne({ username });
-      role = "user";
-    }
-
+    const account = await Admin.findOne({ username });
     if (!account) return res.status(400).json({ message: "Invalid username" });
 
     const isMatch = await bcrypt.compare(password, account.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
-    const token = jwt.sign({ id: account._id, role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    res.json({ token, role });
+    const token = jwt.sign({ id: account._id, role: "admin" }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    res.json({ token, role: "admin" });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }

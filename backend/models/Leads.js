@@ -6,6 +6,6 @@ const leadSchema = new mongoose.Schema({
   source: String,
   status: { type: String, default: "new" },
   notes: [String]
-}, { timestamps: true }); // <-- add this
+}, { timestamps: true });
 
 module.exports = mongoose.model("Lead", leadSchema);

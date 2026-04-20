@@ -208,30 +208,48 @@ async function login() {
 /* =========================
    Sign Up
 ========================= */
-async function signup(){
+async function signup() {
   const username = document.getElementById("new-username").value.trim();
   const email = document.getElementById("new-email").value.trim();
   const password = document.getElementById("new-password").value.trim();
+  const errorBox = document.getElementById("error");
+  const spinner = document.getElementById("signup-loading");
 
-  if (!username || !email || !password){
-    alert("Please fill in all fields");
+  if (!username || !email || !password) {
+    errorBox.textContent = "Please fill in all fields";
     return;
   }
 
-  const res = await fetch(`${API}/signup`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, email, password })
-  });
+  // Show spinner
+  if (spinner) spinner.style.display = "block";
+  errorBox.textContent = "Creating account... please wait.";
 
-  const data = await res.json();
-  if (!res.ok){
-    alert(data.message || "Sign Up failed");
-    return;
+  try {
+    const res = await fetch(`${API}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    const data = await res.json();
+
+    // Hide spinner
+    if (spinner) spinner.style.display = "none";
+
+    if (!res.ok) {
+      errorBox.textContent = data.message || "Sign Up failed";
+      return;
+    }
+
+    // Success
+    errorBox.textContent = "";
+    alert("Account created successfully! Please sign in.");
+    document.getElementById("signup-form").reset();
+    showForm("signin");
+  } catch (err) {
+    if (spinner) spinner.style.display = "none";
+    errorBox.textContent = "Server error: " + err.message;
   }
-
-  alert("Account created successfully! Please sign in.");
-  showForm("signin");
 }
 
 /* =========================
