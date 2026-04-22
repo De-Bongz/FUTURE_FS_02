@@ -135,10 +135,9 @@ Using Live Server or browser
 ---
 
 ## 🧪 Future Improvements
-- Implement password hashing (bcrypt)
-- Dashboard analytics (charts & insights)
+- Enhance analytics (charts & insights)
 - Role-based access control (Admin/User)
-- Deploy to cloud (Render / Railway)
+- Advanced filtering and reporting
 
 ---
 
